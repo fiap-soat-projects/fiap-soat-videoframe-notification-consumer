@@ -22,6 +22,7 @@ internal class NotificationMongoDb
     public string? Error { get; set; }
     public List<NotificationTarget> NotificationTargets { get; set; } = [];
 
+    [SetsRequiredMembers]
     public NotificationMongoDb(Notification notification)
     {
         Id = notification.Id;

@@ -28,8 +28,6 @@ internal static class MongoGlobalOptions
             _conventions,
             type => true);
 
-        BsonSerializer.RegisterSerializer(
-            typeof(DateTime),
-            _dateTimeSerializer);
+        BsonSerializer.RegisterSerializer(_dateTimeSerializer);
     }
 }

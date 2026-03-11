@@ -4,6 +4,6 @@ namespace Domain.UseCases.Interfaces;
 
 internal interface INotificationLogUseCase
 {
-    Task<NotificationLog> CreateAsync(NotificationLog notification, CancellationToken cancellationToken);
+    Task<NotificationLog> CreateAsync(NotificationLog log, CancellationToken cancellationToken);
     Task UpdateStatusAsync(NotificationLog log, CancellationToken cancellationToken);
 }

@@ -1,4 +1,5 @@
-﻿using Domain.Enums;
+﻿using Domain.Entities;
+using Domain.Enums;
 using Domain.ValueObjects;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Diagnostics.CodeAnalysis;
@@ -17,4 +18,29 @@ internal class NotificationLogMongoDb
     public required NotificationTarget Target { get; set; }
     public NotificationStatus Status { get; set; }
     public string? Error { get; set; }
+
+    [SetsRequiredMembers]
+    public NotificationLogMongoDb(NotificationLog log)
+    {
+        Id = log.Id;
+        CreatedAt = log.CreatedAt;
+        UpdatedAt = log.UpdatedAt;
+        NotificationId = log.NotificationId;
+        Target = log.Target;
+        Status = log.Status;
+        Error = log.Error;
+    }
+
+    public NotificationLog ToDomain()
+    {
+        return new NotificationLog(
+            Id,
+            CreatedAt,
+            UpdatedAt,
+            NotificationId,
+            Target,
+            Status,
+            Error
+        );
+    }
 }

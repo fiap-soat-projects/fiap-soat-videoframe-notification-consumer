@@ -1,17 +1,34 @@
 ﻿using Domain.Entities;
 using Domain.Repositories;
+using Infrastructure.Entities;
+using Infrastructure.Repositories.Interfaces;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Adapter.Gateways.Repositories;
 
+[ExcludeFromCodeCoverage]
 internal class NotificationLogRepository : INotificationLogRepository
 {
-    public Task<NotificationLog> CreateAsync(NotificationLog log, CancellationToken cancellationToken)
+    private readonly INotificationLogMongoDbRepository _mongoDbRepository;
+
+    public NotificationLogRepository(INotificationLogMongoDbRepository mongoDbRepository)
     {
-        throw new NotImplementedException();
+        _mongoDbRepository = mongoDbRepository;
     }
 
-    public Task UpdateStatusAsync(NotificationLog log, CancellationToken cancellationToken)
+    public async Task<NotificationLog> CreateAsync(NotificationLog log, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var logMongoDb = new NotificationLogMongoDb(log);
+
+        await _mongoDbRepository.CreateAsync(logMongoDb, cancellationToken);
+
+        return logMongoDb.ToDomain();
+    }
+
+    public async Task UpdateStatusAsync(NotificationLog log, CancellationToken cancellationToken)
+    {
+        var logMongoDb = new NotificationLogMongoDb(log);
+
+        await _mongoDbRepository.UpdateStatusAsync(logMongoDb, cancellationToken);
     }
 }
