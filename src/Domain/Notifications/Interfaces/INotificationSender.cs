@@ -3,8 +3,8 @@ using Domain.Notifications.DTOs;
 
 namespace Domain.Notifications.Interfaces;
 
-internal interface INotificationSender<TMessage> where TMessage : ChannelMessage
+internal interface INotificationSender
 {
     NotificationChannel Channel { get; }
-    Task<bool> SendAsync(TMessage message, CancellationToken cancellationToken);
+    Task<NotificationStatus> NotifyAsync(ChannelMessage message, CancellationToken cancellationToken);
 }

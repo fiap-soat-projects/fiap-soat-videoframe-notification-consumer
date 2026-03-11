@@ -8,13 +8,13 @@ namespace Adapter.Gateways.Notifications.Resolvers;
 [ExcludeFromCodeCoverage]
 internal class NotificationSenderResolver : INotificationSenderResolver
 {
-    
+
     public NotificationSenderResolver()
     {
-        
+
     }
 
-    public INotificationSender<TSender> Resolve<TSender>(NotificationChannel channel)
+    public INotificationSender Resolve(NotificationChannel channel)
     {
         throw new NotImplementedException();
     }

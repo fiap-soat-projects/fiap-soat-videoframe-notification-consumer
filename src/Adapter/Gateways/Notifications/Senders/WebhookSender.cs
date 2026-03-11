@@ -8,14 +8,14 @@ namespace Adapter.Gateways.Notifications.Senders;
 [ExcludeFromCodeCoverage]
 internal class WebhookSender : IWebhookSender
 {
-    public NotificationChannel Channel { get; private init; }
+    public NotificationChannel Channel => NotificationChannel.Webhook;
 
     public WebhookSender()
     {
-        Channel = NotificationChannel.Webhook;
+
     }
 
-    public Task<bool> SendAsync(WebhookMessage message, CancellationToken cancellationToken)
+    public Task<NotificationStatus> NotifyAsync(ChannelMessage message, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

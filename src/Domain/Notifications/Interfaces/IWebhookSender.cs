@@ -1,8 +1,6 @@
-﻿using Domain.Notifications.DTOs;
+﻿namespace Domain.Notifications.Interfaces;
 
-namespace Domain.Notifications.Interfaces;
-
-internal interface IWebhookSender : INotificationSender<WebhookMessage>
+internal interface IWebhookSender : INotificationSender
 {
 
 }

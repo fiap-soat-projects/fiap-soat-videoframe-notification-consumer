@@ -8,14 +8,14 @@ namespace Adapter.Gateways.Notifications.Senders;
 [ExcludeFromCodeCoverage]
 internal class EmailSender : IEmailSender
 {
-    public NotificationChannel Channel { get; private init; }
+    public NotificationChannel Channel => NotificationChannel.Email;
 
     public EmailSender()
     {
-        Channel = NotificationChannel.Email;
+
     }
 
-    public Task<bool> SendAsync(EmailMessage message, CancellationToken cancellationToken)
+    public Task<NotificationStatus> NotifyAsync(ChannelMessage message, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

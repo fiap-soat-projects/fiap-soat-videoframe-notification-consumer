@@ -2,7 +2,6 @@
 
 public enum NotificationStatus
 {
-    None = 0,
-    Sent = 1,
-    Error = 2
+    Sent = 0,
+    Failed = 2
 }
