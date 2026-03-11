@@ -1,3 +1,6 @@
+using Adapter.Applications.DTOs;
+using Adapter.Applications.Interfaces;
+using Infrastructure.Providers;
 using Infrastructure.Services.Interfaces;
 using System.Diagnostics.CodeAnalysis;
 
@@ -7,29 +10,44 @@ namespace Consumer;
 public class Worker : BackgroundService
 {
     private readonly IKafkaService _kafkaService;
+    private readonly INotificationApplication _notificationApplication;
+    private readonly IHostApplicationLifetime _hostApplicationLifetime;
     private readonly ILogger<Worker> _logger;
 
-    public Worker(IKafkaService kafkaService, ILogger<Worker> logger)
+    public Worker(
+        IKafkaService kafkaService,
+        INotificationApplication notificationApplication,
+        IHostApplicationLifetime hostApplicationLifetime,
+        ILogger<Worker> logger)
     {
         _kafkaService = kafkaService;
+        _notificationApplication = notificationApplication;
+        _hostApplicationLifetime = hostApplicationLifetime;
         _logger = logger;
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
+        _logger.LogInformation("Worker running at: {Time}", DateTimeOffset.UtcNow);
 
-        const string VIDEOFRAME_NOTIFICATION_TOPIC_NAME = "notification-consumer";
-
-        _kafkaService.Subscribe(VIDEOFRAME_NOTIFICATION_TOPIC_NAME);
+        _kafkaService.Subscribe(StaticEnvironmentVariableProvider.NotificationTopicName);
 
         while (stoppingToken.IsCancellationRequested is false)
         {
-            var consumeResult = _kafkaService.Consume(stoppingToken);
+            var notificationMessage = _kafkaService.Consume<NotificationMessage>(stoppingToken);
 
-            var message = consumeResult.Message;
+            try
+            {
+                await _notificationApplication.NotifyAsync(notificationMessage, stoppingToken);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error message: {Message}", ex.Message);
 
-            // TODO: Add implementation here
+                _kafkaService.Dispose();
+
+                _hostApplicationLifetime.StopApplication();
+            }
 
             _kafkaService.Commit();
         }

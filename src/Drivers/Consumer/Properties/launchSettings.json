@@ -7,7 +7,8 @@
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development",
         "KAFKA_HOST": "localhost:9092",
-        "KAFKA_CONSUMER_GROUP": "fiap-soat-videoframe-notification-consumer"
+        "KAFKA_CONSUMER_GROUP": "fiap-soat-videoframe-notification-consumer",
+        "NOTIFICATION_TOPIC_NAME": "notification-consumer"
       }
     }
   }

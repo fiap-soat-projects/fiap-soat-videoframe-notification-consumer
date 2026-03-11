@@ -13,7 +13,9 @@ public static class InfrastructureExtensions
     {
         StaticEnvironmentVariableProvider.Init();
 
-        services.AddSingleton<IKafkaService, KafkaService>();
+        services
+            .AddHttpClient()
+            .AddSingleton<IKafkaService, KafkaService>();
 
         return services;
     }

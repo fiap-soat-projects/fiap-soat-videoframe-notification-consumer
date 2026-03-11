@@ -7,14 +7,17 @@ internal static class StaticEnvironmentVariableProvider
 {
     private const string KAFKA_HOST_ENV_VARIABLE_NAME = "KAFKA_HOST";
     private const string KAFKA_CONSUMER_GROUP_ENV_VARIABLE_NAME = "KAFKA_CONSUMER_GROUP";
+    private const string NOTIFICATION_TOPIC_NAME_ENV_VARIABLE_NAME = "NOTIFICATION_TOPIC_NAME";
 
     internal static readonly string KafkaHost;
     internal static readonly string KafkaConsumerGroup;
+    internal static readonly string NotificationTopicName;
 
     static StaticEnvironmentVariableProvider()
     {
         KafkaHost = GetRequiredEnvironmentVariable(KAFKA_HOST_ENV_VARIABLE_NAME);
         KafkaConsumerGroup = GetRequiredEnvironmentVariable(KAFKA_CONSUMER_GROUP_ENV_VARIABLE_NAME);
+        NotificationTopicName = GetRequiredEnvironmentVariable(NOTIFICATION_TOPIC_NAME_ENV_VARIABLE_NAME);
     }
 
     internal static void Init() { }
