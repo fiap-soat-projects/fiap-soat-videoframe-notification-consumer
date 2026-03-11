@@ -1,4 +1,4 @@
-﻿using Adapter.Applications.DTOs;
+﻿using Adapter.Messages;
 
 namespace Adapter.Applications.Interfaces;
 

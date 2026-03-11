@@ -1,4 +1,4 @@
-﻿namespace Domain.Notifications.Constants;
+﻿namespace Adapter.Gateways.Notifications.Constants;
 
 internal static class NotificationConstants
 {

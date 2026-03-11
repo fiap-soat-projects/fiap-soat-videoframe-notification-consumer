@@ -1,4 +1,4 @@
-﻿using Domain.Entities.Enums;
+﻿using Domain.Enums;
 using Domain.Notifications.DTOs;
 using Domain.Notifications.Interfaces;
 using System.Diagnostics.CodeAnalysis;
@@ -15,7 +15,7 @@ internal class EmailSender : IEmailSender
 
     }
 
-    public Task<NotificationStatus> NotifyAsync(ChannelMessage message, CancellationToken cancellationToken)
+    public Task<ChannelNotificationResult> NotifyAsync(ChannelNotificationMessage message, CancellationToken cancellationToken)
     {
         throw new NotImplementedException();
     }

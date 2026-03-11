@@ -8,7 +8,9 @@
         "DOTNET_ENVIRONMENT": "Development",
         "KAFKA_HOST": "localhost:9092",
         "KAFKA_CONSUMER_GROUP": "fiap-soat-videoframe-notification-consumer",
-        "NOTIFICATION_TOPIC_NAME": "videoframe-notification-consumer"
+        "NOTIFICATION_TOPIC_NAME": "videoframe-notification-consumer",
+        "MONGODB_CONNECTION_STRING": "mongodb://admin:admin123@localhost:27017/videoframe_notification?authSource=admin",
+        "APP_NAME": "VideoFrame.Notification.Consumer"
       }
     }
   }

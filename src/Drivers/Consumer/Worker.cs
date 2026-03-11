@@ -1,5 +1,5 @@
-using Adapter.Applications.DTOs;
 using Adapter.Applications.Interfaces;
+using Adapter.Messages;
 using Infrastructure.Providers;
 using Infrastructure.Services.Interfaces;
 using System.Diagnostics.CodeAnalysis;

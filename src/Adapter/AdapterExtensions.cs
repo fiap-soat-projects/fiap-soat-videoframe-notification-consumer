@@ -1,4 +1,6 @@
-﻿using Adapter.Gateways.Notifications.Senders;
+﻿using Adapter.Applications;
+using Adapter.Applications.Interfaces;
+using Adapter.Gateways.Notifications.Senders;
 using Domain.Notifications.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using System.Diagnostics.CodeAnalysis;
@@ -12,7 +14,8 @@ public static class AdapterExtensions
     {
         services
             .AddSingleton<IWebhookSender, WebhookSender>()
-            .AddSingleton<IEmailSender, EmailSender>();
+            .AddSingleton<IEmailSender, EmailSender>()
+            .AddSingleton<INotificationApplication, NotificationApplication>();
 
         return services;
     }

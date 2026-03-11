@@ -1,4 +1,4 @@
-﻿using Domain.Entities.Enums;
+﻿using Domain.Enums;
 using Domain.Notifications.Interfaces;
 
 namespace Adapter.Gateways.Notifications.Resolvers.Interfaces;
