@@ -1,0 +1,15 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Adapter/Adapter.csproj" Id="b6787858-076d-4b2e-a961-3603d5309553" />
+    <Project Path="src/Domain/Domain.csproj" Id="5d613916-3ded-49d9-9f02-9137feb09b44" />
+  </Folder>
+  <Folder Name="/src/Drivers/">
+    <Project Path="src/Drivers/Consumer/Consumer.csproj" Id="b193c909-1353-441d-b10e-f8ce1f9a1820" />
+    <Project Path="src/Drivers/Infrastructure/Infrastructure.csproj" Id="a6418e0f-a7bc-41ac-962f-2fc5c9419316" />
+  </Folder>
+  <Folder Name="/tests/" />
+  <Folder Name="/tests/UnitTests/" />
+</Solution>
