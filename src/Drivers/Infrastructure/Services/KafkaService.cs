@@ -3,21 +3,12 @@ using Infrastructure.Providers;
 using Infrastructure.Services.Interfaces;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Infrastructure.Services;
 
 [ExcludeFromCodeCoverage]
 internal class KafkaService : IKafkaService
 {
-    private static readonly JsonSerializerOptions _serializerOptions = new()
-    {
-        PropertyNameCaseInsensitive = true,
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        Converters = { { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) } },
-        WriteIndented = false
-    };
-
     private readonly IConsumer<Ignore, string> _consumer;
 
     public KafkaService()
@@ -45,7 +36,9 @@ internal class KafkaService : IKafkaService
 
         ArgumentException.ThrowIfNullOrWhiteSpace(consumeResult?.Message.Value);
 
-        var message = JsonSerializer.Deserialize<TClass>(consumeResult.Message.Value, _serializerOptions);
+        var message = JsonSerializer.Deserialize<TClass>(
+            consumeResult.Message.Value,
+            JsonSerializerOptionsProvider.SerializerOptions);
 
         return message!;
     }

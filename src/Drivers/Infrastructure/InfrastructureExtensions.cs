@@ -1,4 +1,7 @@
-﻿using Infrastructure.Connections;
+﻿using Amazon;
+using Amazon.Runtime;
+using Amazon.SimpleEmail;
+using Infrastructure.Connections;
 using Infrastructure.Connections.Interfaces;
 using Infrastructure.Factories;
 using Infrastructure.Options;
@@ -27,11 +30,21 @@ public static class InfrastructureExtensions
         var connection = new MongoConnection(
             DEFAULT_CLUSTER_NAME,
             mongoConnectionString!,
-            StaticEnvironmentVariableProvider.AppName);
+            StaticEnvironmentVariableProvider.AppName);      
 
         services
             .AddSingleton<IMongoConnection>(connection)
             .AddSingleton(MongoDataContextFactory.Create);
+
+        var awsCredentials = new BasicAWSCredentials(
+           StaticEnvironmentVariableProvider.AwsAccessKeyId,
+           StaticEnvironmentVariableProvider.AwsSecretAccessKey);
+
+        var emailServiceClient = new AmazonSimpleEmailServiceClient(
+            awsCredentials,
+            RegionEndpoint.GetBySystemName(StaticEnvironmentVariableProvider.AwsRegion));
+
+        services.AddSingleton<IAmazonSimpleEmailService>(emailServiceClient);
 
         services
             .AddSingleton<INotificationMongoDbRepository, NotificationMongoDbRepository>()
