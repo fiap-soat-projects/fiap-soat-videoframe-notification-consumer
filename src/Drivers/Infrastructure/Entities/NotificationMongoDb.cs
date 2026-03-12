@@ -1,6 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Enums;
 using Domain.ValueObjects;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using System.Diagnostics.CodeAnalysis;
 
@@ -11,6 +12,8 @@ namespace Infrastructure.Entities;
 [BsonDiscriminator("notification")]
 internal class NotificationMongoDb
 {
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
     public string? Id { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
@@ -19,6 +22,7 @@ internal class NotificationMongoDb
     public required string UserName { get; set; }
     public required string FileUrl { get; set; }
     public required NotificationType Type { get; set; }
+    [BsonIgnoreIfNull]
     public string? Error { get; set; }
     public List<NotificationTarget> NotificationTargets { get; set; } = [];
 

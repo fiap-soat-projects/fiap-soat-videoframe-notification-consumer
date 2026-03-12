@@ -1,4 +1,4 @@
-﻿using Adapter.Gateways.Notifications.Constants;
+﻿using Adapter.Gateways.Notifications.Senders.Constants;
 using Amazon.SimpleEmail;
 using Amazon.SimpleEmail.Model;
 using Domain.Enums;
@@ -70,7 +70,7 @@ internal class EmailSender : IEmailSender
             Message = new Message
             {
                 Subject = new Content(subject),
-                Body = new Body { Text = new Content(body) }
+                Body = new Body { Html = new Content { Charset = "UTF-8", Data = body } }
             }
         };
     }
@@ -101,9 +101,13 @@ internal class EmailSender : IEmailSender
 
     private static string LoadTemplate(string templateName)
     {
-        var path = Path.Combine(AppContext.BaseDirectory, "Templates", templateName);
+        var assembly = typeof(EmailSender).Assembly;
 
-        return File.ReadAllText(path);
+        using var stream = assembly.GetManifestResourceStream($"Adapter.Gateways.Notifications.Senders.Templates.{templateName}");
+
+        using var reader = new StreamReader(stream!);
+
+        return reader.ReadToEnd();
     }
 
     private static string FillTemplate(string template, Dictionary<string, string> values)

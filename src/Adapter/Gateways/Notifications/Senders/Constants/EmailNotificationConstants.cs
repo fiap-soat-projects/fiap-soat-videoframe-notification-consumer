@@ -1,4 +1,4 @@
-﻿namespace Adapter.Gateways.Notifications.Constants;
+﻿namespace Adapter.Gateways.Notifications.Senders.Constants;
 
 internal static class EmailNotificationConstants
 {

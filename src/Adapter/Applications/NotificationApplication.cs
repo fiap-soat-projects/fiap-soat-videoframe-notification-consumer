@@ -32,19 +32,18 @@ internal class NotificationApplication : INotificationApplication
 
         var notification = await _notificationUseCase.CreateAsync(NotificationFactory.Create(message), cancellationToken);
 
-        await HandleNotificationsAsync(notification.Id!, message, notification.NotificationTargets, cancellationToken);
+        await HandleNotificationsAsync(message, notification, cancellationToken);
     }
 
-    private async Task HandleNotificationsAsync(
-        string notificationId,
+    private async Task HandleNotificationsAsync(        
         NotificationMessage message,
-        List<NotificationTarget> notifications,
+        Notification notification,
         CancellationToken cancellationToken)
     {
-        foreach (var notification in notifications)
+        foreach (var target in notification.NotificationTargets)
         {
             var notificationLog = await _notificationLogUseCase.CreateAsync(
-                new NotificationLog(notificationId, notification),
+                new NotificationLog(notification.Id!, target),
                 cancellationToken);
 
             var channelMessage = new ChannelNotificationMessage
@@ -52,12 +51,13 @@ internal class NotificationApplication : INotificationApplication
                 EditId = message.EditId,
                 UserName = message.UserName,
                 FileUrl = message.FileUrl,
-                Target = notification.Target,
+                Target = target.Target,
                 Type = message.Type,
+                InternalError = message.Error
             };
 
             var notificationStatus = await _notificationSenderResolver
-                .Resolve(notification.Channel)
+                .Resolve(target.Channel)
                 .NotifyAsync(channelMessage, cancellationToken);
 
             notificationLog.SetSendStatus(notificationStatus.Status, notificationStatus.InternalError);

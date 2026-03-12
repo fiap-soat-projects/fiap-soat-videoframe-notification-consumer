@@ -1,4 +1,5 @@
-﻿using Domain.Enums;
+﻿using Adapter.Gateways.Notifications.Senders.DTOs;
+using Domain.Enums;
 using Domain.Notifications.DTOs;
 using Domain.Notifications.Interfaces;
 using Infrastructure.Providers;
@@ -25,7 +26,7 @@ internal class WebhookSender : IWebhookSender
 
     public async Task<ChannelNotificationResult> NotifyAsync(ChannelNotificationMessage message, CancellationToken cancellationToken)
     {
-        var payload = JsonSerializer.Serialize(message, JsonSerializerOptionsProvider.SerializerOptions);
+        var payload = JsonSerializer.Serialize(new WebhookPayload(message), JsonSerializerOptionsProvider.SerializerOptions);
 
         var content = new StringContent(payload, Encoding.UTF8, "application/json");
 

@@ -1,8 +1,10 @@
-﻿namespace Infrastructure.Services.Interfaces;
+﻿using Confluent.Kafka;
 
-public interface IKafkaService : IDisposable
+namespace Infrastructure.Services.Interfaces;
+
+public interface IKafkaService
 {
     void Subscribe(string topic);
-    TClass Consume<TClass>(CancellationToken cancellationToken);
+    ConsumeResult<Ignore, string> Consume(CancellationToken cancellationToken);
     void Commit();
 }

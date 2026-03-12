@@ -23,12 +23,18 @@ internal class NotificationLogMongoDbRepository : INotificationLogMongoDbReposit
 
     public async Task UpdateStatusAsync(NotificationLogMongoDb log, CancellationToken cancellationToken)
     {
+        var update = Builders<NotificationLogMongoDb>.Update
+            .Set(x => x.UpdatedAt, log.UpdatedAt)
+            .Set(x => x.Status, log.Status);
+
+        if (string.IsNullOrWhiteSpace(log.Error) is false)
+        {
+            update.Set(x => x.Error, log.Error);
+        }
+
         await _mongoCollection.UpdateOneAsync(
             Builders<NotificationLogMongoDb>.Filter.Eq(x => x.Id, log.Id),
-            Builders<NotificationLogMongoDb>.Update
-                .Set(x => x.UpdatedAt, log.UpdatedAt)
-                .Set(x => x.Status, log.Status)
-                .Set(x => x.Error, log.Error),
+            update,
             cancellationToken: cancellationToken);
     }
 }

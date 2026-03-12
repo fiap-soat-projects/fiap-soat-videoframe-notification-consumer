@@ -19,8 +19,8 @@ public static class AdapterExtensions
     public static IServiceCollection AddAdapter(this IServiceCollection services)
     {
         services
-            .AddSingleton<IWebhookSender, WebhookSender>()
-            .AddSingleton<IEmailSender, EmailSender>()
+            .AddSingleton<INotificationSender, WebhookSender>()
+            .AddSingleton<INotificationSender, EmailSender>()
             .AddSingleton<INotificationSenderResolver, NotificationSenderResolver>();
 
         services

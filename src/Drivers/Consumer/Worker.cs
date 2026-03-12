@@ -3,6 +3,7 @@ using Adapter.Messages;
 using Infrastructure.Providers;
 using Infrastructure.Services.Interfaces;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 namespace Consumer;
 
@@ -34,22 +35,29 @@ public class Worker : BackgroundService
 
         while (stoppingToken.IsCancellationRequested is false)
         {
-            var notificationMessage = _kafkaService.Consume<NotificationMessage>(stoppingToken);
-
-            try
-            {
-                await _notificationApplication.NotifyAsync(notificationMessage, stoppingToken);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error message: {Message}", ex.Message);
-
-                _kafkaService.Dispose();
-
-                _hostApplicationLifetime.StopApplication();
-            }
-
-            _kafkaService.Commit();
+            await ProcessMessage(stoppingToken);
         }
+    }
+
+    private async Task ProcessMessage(CancellationToken stoppingToken)
+    {
+        var consumeResult = _kafkaService.Consume(stoppingToken);
+
+        var notificationMessage = JsonSerializer.Deserialize<NotificationMessage>(
+            consumeResult.Message.Value,
+            JsonSerializerOptionsProvider.SerializerOptions);
+
+        try
+        {
+            await _notificationApplication.NotifyAsync(notificationMessage!, stoppingToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error message: {Message}", ex.Message);
+
+            _hostApplicationLifetime.StopApplication();
+        }
+
+        _kafkaService.Commit();
     }
 }

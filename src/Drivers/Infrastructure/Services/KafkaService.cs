@@ -2,12 +2,11 @@
 using Infrastructure.Providers;
 using Infrastructure.Services.Interfaces;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
 
 namespace Infrastructure.Services;
 
 [ExcludeFromCodeCoverage]
-internal class KafkaService : IKafkaService
+internal class KafkaService : IKafkaService, IDisposable
 {
     private readonly IConsumer<Ignore, string> _consumer;
 
@@ -30,17 +29,9 @@ internal class KafkaService : IKafkaService
         _consumer.Subscribe(topic);
     }
 
-    public TClass Consume<TClass>(CancellationToken cancellationToken)
+    public ConsumeResult<Ignore, string> Consume(CancellationToken cancellationToken)
     {
-        var consumeResult = _consumer.Consume(cancellationToken);
-
-        ArgumentException.ThrowIfNullOrWhiteSpace(consumeResult?.Message.Value);
-
-        var message = JsonSerializer.Deserialize<TClass>(
-            consumeResult.Message.Value,
-            JsonSerializerOptionsProvider.SerializerOptions);
-
-        return message!;
+        return _consumer.Consume(cancellationToken);
     }
 
     public void Commit()
