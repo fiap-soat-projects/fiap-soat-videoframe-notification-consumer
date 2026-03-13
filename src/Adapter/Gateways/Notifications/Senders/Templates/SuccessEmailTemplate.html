@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<body style="font-family: Arial, sans-serif; background-color:#f5f5f5; padding:20px;">
+
+    <table width="600" align="center" style="background:white; padding:20px; border-radius:8px;">
+
+        <tr>
+            <td>
+                <h2 style="color:#2e7d32;">Processamento concluído com sucesso</h2>
+                <p>Seu arquivo foi processado com sucesso no VideoFrame. Veja os detalhes abaixo:</p>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <ul style="line-height:1.8;">
+                    <li><strong>Id da edição:</strong> {{EditId}}</li>
+                    <li><strong>Solicitante:</strong> {{UserName}}</li>
+                </ul>
+            </td>
+        </tr>
+
+        <tr>
+            <td align="center" style="padding-top:20px;">
+                <a href="{{DownloadUrl}}"
+                   style="background-color:#2e7d32; color:white; padding:12px 20px; text-decoration:none; border-radius:5px; font-weight:bold;">
+                    Baixar arquivo
+                </a>
+            </td>
+        </tr>
+
+    </table>
+
+</body>
+</html>
