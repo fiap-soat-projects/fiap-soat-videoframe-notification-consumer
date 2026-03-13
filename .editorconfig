@@ -1,0 +1,13 @@
+root = true
+
+[*]
+indent_style = space
+
+[*.xml]
+indent_size = 2
+
+[*.cs]
+csharp_style_prefer_primary_constructors = false
+
+[*.{cs,vb}]
+dotnet_diagnostic.CA1873.severity = none
