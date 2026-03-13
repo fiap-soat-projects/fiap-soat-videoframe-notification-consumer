@@ -37,6 +37,8 @@ public class Worker : BackgroundService
         {
             await ProcessMessage(stoppingToken);
         }
+
+        _hostApplicationLifetime.StopApplication();
     }
 
     private async Task ProcessMessage(CancellationToken stoppingToken)
@@ -54,8 +56,6 @@ public class Worker : BackgroundService
         catch (Exception ex)
         {
             _logger.LogError(ex, "Error message: {Message}", ex.Message);
-
-            _hostApplicationLifetime.StopApplication();
         }
 
         _kafkaService.Commit();

@@ -1,4 +1,30 @@
 services:
+  videoframe-notification-consumer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: videoframe-notification-consumer
+    restart: always
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - DOTNET_ENVIRONMENT=${DOTNET_ENVIRONMENT}
+      - KAFKA_HOST=${KAFKA_HOST}
+      - KAFKA_CONSUMER_GROUP=${KAFKA_CONSUMER_GROUP}
+      - NOTIFICATION_TOPIC_NAME=${NOTIFICATION_TOPIC_NAME}
+      - MONGODB_CONNECTION_STRING=${MONGODB_CONNECTION_STRING}
+      - APP_NAME=${APP_NAME}
+      - EMAIL_SENDER=${EMAIL_SENDER}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+    depends_on:
+      - mongodb
+      - kafka
+    networks:
+      - videoframe-network
+
   kafka:
     image: confluentinc/cp-kafka:7.6.1
     container_name: kafka
@@ -17,6 +43,38 @@ services:
       KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+    volumes:
+      - ./.docker/kafka:/var/lib/kafka/data
+    networks:
+      - videoframe-network
+
+  kafka-init-topics:
+    image: confluentinc/cp-kafka:7.6.1
+    restart: "no"
+    depends_on:
+      - kafka
+    entrypoint: [ '/bin/bash', '-c' ]
+    command: |
+        "
+        kafka-topics --bootstrap-server kafka:29092 --list
+
+        echo -e 'Creating kafka topics...'
+        
+        topics=(
+          'videoframe-processor'
+          'videoframe-notification'
+        )
+
+        for topic in \"$${topics[@]}\"; do
+          echo \"Attempting to create topic: $$topic\";
+          kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists --topic \"$$topic\" --replication-factor 1 --partitions 1;        
+        done
+
+        echo 'All topics processed successfully.'
+        kafka-topics --bootstrap-server kafka:29092 --list
+        "
+    networks:
+      - videoframe-network
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
@@ -24,8 +82,40 @@ services:
     depends_on:
       - kafka
     ports:
-      - "8080:8080"
+      - "9093:8080"
     environment:
       DYNAMIC_CONFIG_ENABLED: "true"
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:29092
+    networks:
+      - videoframe-network
+
+  mongodb:
+    image: mongo:7.0
+    container_name: mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin123
+      - MONGO_INITDB_DATABASE=videoframe_notification
+    volumes:
+      - ./.docker/mongodb:/data/db
+    networks:
+      - videoframe-network
+
+  webhook-tester:
+    image: tarampampam/webhook-tester
+    container_name: webhook-tester
+    ports:
+      - "7070:8080"
+    environment:
+      - LOG_LEVEL=debug
+    restart: unless-stopped
+    networks:
+      - videoframe-network
+
+networks:
+  videoframe-network:
+    driver: bridge

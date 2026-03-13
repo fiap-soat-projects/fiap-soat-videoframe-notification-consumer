@@ -1,5 +1,8 @@
-﻿namespace Adapter.Gateways.Notifications.Senders.Constants;
+﻿using System.Diagnostics.CodeAnalysis;
 
+namespace Adapter.Gateways.Notifications.Senders.Constants;
+
+[ExcludeFromCodeCoverage]
 internal static class EmailNotificationConstants
 {
     internal const string EMAIL_SUBJECT_FOR_SUCCESSFUL_VIDEO_PROCESSING = "VideoFrame - Seu frame foi gerado com sucesso!";

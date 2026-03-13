@@ -1,6 +1,10 @@
 <Solution>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="docker-compose.yml" />
+    <File Path="Dockerfile" />
+    <File Path="README.md" />
   </Folder>
   <Folder Name="/src/">
     <Project Path="src/Adapter/Adapter.csproj" Id="b6787858-076d-4b2e-a961-3603d5309553" />
@@ -11,5 +15,7 @@
     <Project Path="src/Drivers/Infrastructure/Infrastructure.csproj" Id="a6418e0f-a7bc-41ac-962f-2fc5c9419316" />
   </Folder>
   <Folder Name="/tests/" />
-  <Folder Name="/tests/UnitTests/" />
+  <Folder Name="/tests/UnitTests/">
+    <Project Path="tests/UnitTests/UnitTests.csproj" Id="4556831e-2b06-4bb6-b3ec-3c1d7e00638f" />
+  </Folder>
 </Solution>

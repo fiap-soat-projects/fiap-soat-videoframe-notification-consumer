@@ -61,9 +61,4 @@ internal class Notification
         Error = error;
         NotificationTargets = notificationTargets;
     }
-
-    internal void Update()
-    {
-        UpdatedAt = DateTime.UtcNow;
-    }
 }
