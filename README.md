@@ -52,17 +52,17 @@ src/
 
 A aplicação utiliza as seguintes variáveis para configuração:
 
-| Variável                    | Descrição                                                                 |
-|-----------------------------|---------------------------------------------------------------------------|
-| `KAFKA_HOST`                | Endereço do broker Kafka                                                  |
-| `KAFKA_CONSUMER_GROUP`      | Nome do grupo de consumidores Kafka                                       |
-| `NOTIFICATION_TOPIC_NAME`   | Nome do tópico Kafka de onde as mensagens são consumidas                  |
-| `MONGODB_CONNECTION_STRING` | String de conexão para o banco MongoDB                                    |
-| `APP_NAME`                  | Nome da aplicação (usado na conexão MongoDB)                              |
-| `EMAIL_SENDER`              | Endereço de e-mail remetente para notificações via AWS SES                |
-| `AWS_ACCESS_KEY_ID`         | Chave de acesso da conta ou role AWS                                      |
-| `AWS_SECRET_ACCESS_KEY`     | Segredo correspondente à `AWS_ACCESS_KEY_ID`                              |
-| `AWS_REGION`                | Região dos recursos AWS (ex.: `us-east-1`)                                |
+| Variável                                            | Descrição                                                                 |
+|-----------------------------------------------------|---------------------------------------------------------------------------|
+| `KAFKA_HOST`                                        | Endereço do broker Kafka                                                  |
+| `KAFKA_CONSUMER_GROUP`                              | Nome do grupo de consumidores Kafka                                       |
+| `NOTIFICATION_TOPIC_NAME`                           | Nome do tópico Kafka de onde as mensagens são consumidas                  |
+| `VIDEOFRAME_NOTIFICATION_MONGODB_CONNECTION_STRING` | String de conexão para o banco MongoDB                                    |
+| `APP_NAME`                                          | Nome da aplicação (usado na conexão MongoDB)                              |
+| `EMAIL_SENDER`                                      | Endereço de e-mail remetente para notificações via AWS SES                |
+| `AWS_ACCESS_KEY_ID`                                 | Chave de acesso da conta ou role AWS                                      |
+| `AWS_SECRET_ACCESS_KEY`                             | Segredo correspondente à `AWS_ACCESS_KEY_ID`                              |
+| `AWS_REGION`                                        | Região dos recursos AWS (ex.: `us-east-1`)                                |
 
 ## 🗃️ Banco de Dados
 
@@ -147,7 +147,7 @@ dotnet build --configuration Release
 $env:KAFKA_HOST = "localhost:9092"
 $env:KAFKA_CONSUMER_GROUP = "notification-group"
 $env:NOTIFICATION_TOPIC_NAME = "notification-topic"
-$env:MONGODB_CONNECTION_STRING = "mongodb://localhost:27017"
+$env:VIDEOFRAME_NOTIFICATION_MONGODB_CONNECTION_STRING = "mongodb://localhost:27017"
 $env:APP_NAME = "videoframe-notification-consumer"
 $env:EMAIL_SENDER = "noreply@example.com"
 $env:AWS_ACCESS_KEY_ID = "your-access-key"

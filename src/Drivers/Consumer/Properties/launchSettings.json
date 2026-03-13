@@ -9,7 +9,7 @@
         "KAFKA_HOST": "localhost:9092",
         "KAFKA_CONSUMER_GROUP": "fiap-soat-videoframe-notification-consumer",
         "NOTIFICATION_TOPIC_NAME": "videoframe-notification",
-        "MONGODB_CONNECTION_STRING": "mongodb://admin:admin123@localhost:27017/videoframe_notification?authSource=admin",
+        "VIDEOFRAME_NOTIFICATION_MONGODB_CONNECTION_STRING": "mongodb://admin:admin123@localhost:27017/videoframe_notification?authSource=admin",
         "APP_NAME": "VideoFrame.Notification.Consumer",
         "EMAIL_SENDER": "",
         "AWS_ACCESS_KEY_ID": "",

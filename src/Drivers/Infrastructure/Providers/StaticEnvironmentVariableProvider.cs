@@ -9,7 +9,7 @@ internal static class StaticEnvironmentVariableProvider
     private const string KAFKA_HOST_ENV_VARIABLE_NAME = "KAFKA_HOST";
     private const string KAFKA_CONSUMER_GROUP_ENV_VARIABLE_NAME = "KAFKA_CONSUMER_GROUP";
     private const string NOTIFICATION_TOPIC_NAME_ENV_VARIABLE_NAME = "NOTIFICATION_TOPIC_NAME";
-    private const string MONGODB_CONNECTION_STRING_ENV_VARIABLE_NAME = "MONGODB_CONNECTION_STRING";
+    private const string VIDEOFRAME_NOTIFICATION_MONGODB_CONNECTION_STRING_ENV_VARIABLE_NAME = "VIDEOFRAME_NOTIFICATION_MONGODB_CONNECTION_STRING";
     private const string APP_NAME_ENV_VARIABLE_NAME = "APP_NAME";
     private const string EMAIL_SENDER_ENV_VARIABLE_NAME = "EMAIL_SENDER";
     private const string AWS_ACCESS_KEY_ID_ENV_VARIABLE_NAME = "AWS_ACCESS_KEY_ID";
@@ -31,7 +31,7 @@ internal static class StaticEnvironmentVariableProvider
         KafkaHost = GetRequiredEnvironmentVariable(KAFKA_HOST_ENV_VARIABLE_NAME);
         KafkaConsumerGroup = GetRequiredEnvironmentVariable(KAFKA_CONSUMER_GROUP_ENV_VARIABLE_NAME);
         NotificationTopicName = GetRequiredEnvironmentVariable(NOTIFICATION_TOPIC_NAME_ENV_VARIABLE_NAME);
-        MongoDbConnectionString = GetRequiredEnvironmentVariable(MONGODB_CONNECTION_STRING_ENV_VARIABLE_NAME);
+        MongoDbConnectionString = GetRequiredEnvironmentVariable(VIDEOFRAME_NOTIFICATION_MONGODB_CONNECTION_STRING_ENV_VARIABLE_NAME);
         AppName = GetRequiredEnvironmentVariable(APP_NAME_ENV_VARIABLE_NAME);
         EmailSender = GetRequiredEnvironmentVariable(EMAIL_SENDER_ENV_VARIABLE_NAME);
         AwsAccessKeyId = GetRequiredEnvironmentVariable(AWS_ACCESS_KEY_ID_ENV_VARIABLE_NAME);
